@@ -11,7 +11,22 @@ def corrigir_palavra(palavra):
 
     Ponto 1.2.1
     """
-    pass
+    i = 0
+    while i < len(palavra)-1:  # como vai comparar o indíce i com o índice i+1, o i não chega ao último índice da palavra
+        if (ord(palavra[i]) == ord(palavra[i+1])+ 32) or (ord(palavra[i]) == ord(palavra[i+1]) - 32):  # comparar as letras, usando a tabela ascii
+            palavra = palavra[0: i] + palavra[i + 2 : len(palavra)]
+            #print(palavra)
+            if i != 0:
+                i-=1
+        else:
+            i +=1
+    return palavra
+        
+
+
+print(corrigir_palavra("cCdatabasacCADde"))
+print(corrigir_palavra("abBAx"))
+
 
 
 def eh_anagrama(palavra, anagrama):
