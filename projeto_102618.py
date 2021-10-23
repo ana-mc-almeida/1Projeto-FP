@@ -22,11 +22,8 @@ def corrigir_palavra(palavra):
             i +=1
     return palavra
         
-
-
 print(corrigir_palavra("cCdatabasacCADde"))
 print(corrigir_palavra("abBAx"))
-
 
 
 def eh_anagrama(palavra, anagrama):
@@ -37,8 +34,11 @@ def eh_anagrama(palavra, anagrama):
 
     Ponto 1.2.2
     """
-    pass
+    
+    return sorted(palavra.upper) == sorted(anagrama.upper)
 
+print(eh_anagrama('caso', 'SaCo'))
+print(eh_anagrama('caso', 'casos'))
 
 def corrigir_doc(texto):
     """
@@ -49,6 +49,7 @@ def corrigir_doc(texto):
             As palavras só podem estar separadas por 1 espaço
             Tem 1 ou mais palavras
             Cada palavra eh formada por pelo menos uma letra
+            Cada palavra soh tem letras
             Se nao for, gera um ValueError ("corrigir doc: argumento invalido")
 
     Ponto 1.2.3

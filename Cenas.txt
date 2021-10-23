@@ -1,0 +1,3 @@
+Ver para correr a string da primeira de traz para a frente
+
+Comparar .index() com pesquisa binária 
