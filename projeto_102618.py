@@ -23,10 +23,6 @@ def corrigir_palavra(palavra):
         else:
             i +=1
     return palavra
-        
-#print(corrigir_palavra("cCdatabasacCADde"))
-#print(corrigir_palavra("abBAx"))
-#help(corrigir_palavra)
 
 
 def eh_anagrama(palavra, anagrama):
@@ -43,9 +39,6 @@ def eh_anagrama(palavra, anagrama):
         return False
     return sorted(palavra.upper()) == sorted(anagrama.upper())
 
-# print(eh_anagrama('caso', 'SaCo'))
-# print(eh_anagrama('caso', 'casos'))
-# print(eh_anagrama('caso', 'caso'))
 
 def validar_corrigir_doc(texto):
     for i in range(len(texto)):
@@ -90,10 +83,6 @@ def corrigir_doc(texto):
         i += 1
 
     return texto_filtrado
-
-# print(corrigir_doc('???'))
-# doc = 'BuAaXOoxiIKoOkggyrFfhHXxR duJjUTtaCcmMtaAGga eEMmtxXOjUuJQqQHhqoada JlLjbaoOsuUeYy cChgGvValLCwMmWBbclLsNn LyYlMmwmMrRrongTtoOkyYcCK daRfFKkLlhHrtZKqQkkvVKza'
-# print(corrigir_doc(doc))
 
 
 # 2 - DESCOBERTA DO PIN
@@ -187,3 +176,111 @@ def filtrar_senhas(entradas):
     Ponto 5.2.3
     """
     pass
+
+
+# PUBLIC TESTS
+
+# print(corrigir_palavra('abBAx'))
+# x
+
+#print(corrigir_palavra('cCdatabasacCADde'))
+# database
+
+#print(eh_anagrama('caso', 'SaCo'))
+# True
+
+#print(eh_anagrama('caso', 'casos'))
+# False
+
+#print(corrigir_doc('???'))
+# corrigir_doc: argumento invalido
+
+doc = 'BuAaXOoxiIKoOkggyrFfhHXxR duJjUTtaCcmMtaAGga eEMmtxXOjUuJQqQHhqoada JlLjbaoOsuUeYy cChgGvValLCwMmWBbclLsNn LyYlMmwmMrRrongTtoOkyYcCK daRfFKkLlhHrtZKqQkkvVKza'
+#print(corrigir_doc(doc))
+# Buggy data base has wrong data
+
+#-----2-----#
+
+#print(obter_posicao('C', 5))
+# 2
+
+#print(obter_digito('CEE', 5))
+# 1
+
+#print(obter_pin(()))
+# obter_pin: argumento invalido
+
+t = ('CEE', 'DDBBB', 'ECDBE', 'CCCCB')
+#print(obter_pin(t))
+# (1, 9, 8, 5)
+
+
+
+#-----3-----#
+
+#print(eh_entrada(('a-b-c-d-e-f-g-h', '[abcd]', (950, 300))))
+# False
+
+#print(eh_entrada(('a-b-c-d-e-f-g-h-2', '[abcde]', (950, 300))))
+# False
+
+#print(eh_entrada(('a-b-c-d-e-f-g-h', '[xxxxx]', (950, 300))))
+# True
+
+#print(validar_cifra('a-b-c-d-e-f-g-h', '[xxxxx]'))
+# False
+
+#print(validar_cifra('a-b-c-d-e-f-g-h', '[abcde]'))
+# True
+
+#print(filtrar_bdb([]))
+# filtrar_bdb: argumento invalido
+
+bdb = [('aaaaa-bbb-zx-yz-xy', '[abxyz]', (950, 300)), ('a-b-c-d-e-f-g-h', '[abcde]', (124, 325, 7)), ('entrada-muito-errada', '[abcde]', (50, 404))]
+#print(filtrar_bdb(bdb))
+# [('entrada-muito-errada', '[abcde]', (50, 404))]
+
+
+#-----4-----
+
+
+#print(eh_entrada(('qgfo-qutdo-s-egoes-wzegsnfmjqz', '[abcde]', (2223,424,1316,99))))
+# True
+
+#print(obter_num_seguranca((2223,424,1316,99)))
+# 325
+
+
+#print(decifrar_texto('qgfo-qutdo-s-egoes-wzegsnfmjqz', 325))
+# esta cifra e quase inquebravel
+
+
+#print(decifrar_bdb([('nothing')]))
+# decifrar_bdb: argumento invalido
+
+bdb = [('qgfo-qutdo-s-egoes-wzegsnfmjqz', '[abcde]', (2223,424,1316,99)), ('lctlgukvzwy-ji-xxwmzgugkgw', '[abxyz]', (2388, 367, 5999)), ('nyccjoj-vfrex-ncalml', '[xxxxx]', (50, 404))]
+#print(decifrar_bdb(bdb))
+# ['esta cifra e quase inquebravel', 'fundamentos da programacao', 'entrada muito errada']
+
+#----5----
+
+#print(eh_utilizador({'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': (1, 3), 'char': 'a'}}))
+# True
+
+#print(eh_utilizador({'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': 1, 'char': 'a'}}))
+# False
+
+
+#print(eh_senha_valida('aabcde', {'vals': (1, 3), 'char': 'a'}))
+# True
+
+#print(eh_senha_valida('cdefgh', {'vals': (1, 3), 'char': 'b'}))
+# False
+
+
+#print(filtrar_senhas([]))
+# filtrar_senhas: argumento invalido
+
+bdb = [{'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': (1, 3), 'char': 'a'}}, {'name': 'jane.doe', 'pass': 'cdefgh', 'rule': {'vals': (1, 3), 'char': 'b'}}, {'name': 'jack.doe', 'pass': 'cccccc', 'rule': {'vals': (2, 9), 'char': 'c'}}]
+#print(filtrar_senhas(bdb))
+# ['jack.doe', 'jane.doe']
