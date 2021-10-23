@@ -3,6 +3,8 @@
 
 def corrigir_palavra(palavra):
     """
+    corrigir palavra: cad. carateres -> cad. carateres
+
     Recebe uma palavra, potencialmente modificada por um surto de letras.
     Devolve a string correspondente ah aplicação das reduções:
         Remover o par minuscula/maiuscula da mesma letra se estas estiverem juntas
@@ -12,7 +14,7 @@ def corrigir_palavra(palavra):
     Ponto 1.2.1
     """
     i = 0
-    while i < len(palavra)-1:  # como vai comparar o indíce i com o índice i+1, o i não chega ao último índice da palavra
+    while i < len(palavra)-1:  # como vai comparar o indíce i com o índice i+1, o i não chega ao último índice da palavra OU quando só há uma letra nunca vai ser certo
         if (ord(palavra[i]) == ord(palavra[i+1])+ 32) or (ord(palavra[i]) == ord(palavra[i+1]) - 32):  # comparar as letras, usando a tabela ascii
             palavra = palavra[0: i] + palavra[i + 2 : len(palavra)]
             #print(palavra)
@@ -22,26 +24,44 @@ def corrigir_palavra(palavra):
             i +=1
     return palavra
         
-print(corrigir_palavra("cCdatabasacCADde"))
-print(corrigir_palavra("abBAx"))
+#print(corrigir_palavra("cCdatabasacCADde"))
+#print(corrigir_palavra("abBAx"))
+#help(corrigir_palavra)
 
 
 def eh_anagrama(palavra, anagrama):
     """
+    eh anagrama: (cad. carateres, cad. carateres) -> booleano
+
     Recebe duas palavras e retorna True or False dependendo se sao anagramas
     É considerado anagrama: as palavras sao constituidas pelas mesmas letras, ignorando diferenças
     entre maiusculas e minusculas e a ordem entre carateres.
 
     Ponto 1.2.2
     """
-    
-    return sorted(palavra.upper) == sorted(anagrama.upper)
+    if palavra == anagrama:
+        return False
+    return sorted(palavra.upper()) == sorted(anagrama.upper())
 
-print(eh_anagrama('caso', 'SaCo'))
-print(eh_anagrama('caso', 'casos'))
+# print(eh_anagrama('caso', 'SaCo'))
+# print(eh_anagrama('caso', 'casos'))
+# print(eh_anagrama('caso', 'caso'))
+
+def validar_corrigir_doc(texto):
+    for i in range(len(texto)):
+        char_atual = texto[i]
+        if char_atual == " " == texto[i+1]: #validar se há dois espaços seguidos
+            return False
+        elif not (65 <= ord(char_atual) <= 90 or 97 <= ord(char_atual) <= 122 or char_atual == " "): #validar se apenas existem letras e espaços no texto
+            return False
+    return True
+
 
 def corrigir_doc(texto):
     """
+    corrigir doc: cad. carateres -> cad. carateres
+
+
     Recebe o texto com os erros
         Corrige as palavras
         Vê se sao anagramas e soh deixa a primeira ocorrencia de cada
@@ -54,7 +74,26 @@ def corrigir_doc(texto):
 
     Ponto 1.2.3
     """
-    pass
+    if not validar_corrigir_doc(texto):
+        raise ValueError ("corrigir doc: argumento invalido")
+
+    texto_filtrado = ""
+    for palavra in texto.split(" "):
+        texto_filtrado += corrigir_palavra(palavra) + " "
+
+    i = 0
+    while i < len(texto_filtrado.split(" ")):
+        palavras = texto_filtrado.split(" ")
+        for j in range(i+1, len(palavras)):
+            if eh_anagrama(palavras[i], palavras[j]):
+                texto_filtrado = texto_filtrado.replace(palavras[j] + " ", "")
+        i += 1
+
+    return texto_filtrado
+
+# print(corrigir_doc('???'))
+# doc = 'BuAaXOoxiIKoOkggyrFfhHXxR duJjUTtaCcmMtaAGga eEMmtxXOjUuJQqQHhqoada JlLjbaoOsuUeYy cChgGvValLCwMmWBbclLsNn LyYlMmwmMrRrongTtoOkyYcCK daRfFKkLlhHrtZKqQkkvVKza'
+# print(corrigir_doc(doc))
 
 
 # 2 - DESCOBERTA DO PIN
