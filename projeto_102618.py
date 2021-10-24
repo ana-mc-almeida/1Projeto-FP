@@ -88,18 +88,47 @@ def corrigir_doc(texto):
 # 2 - DESCOBERTA DO PIN
 
 
-def obter_posicao(movimento, posicao_atual):
-    """Ponto 2.2.1"""
-    pass
+def obter_posicao(movimento, digito):
+    """
+    obter posicao: (cad. carateres, inteiro) -> inteiro
+
+    Ponto 2.2.1"""
+    if movimento == "B" and digito < 7: # não entra se digito for 7, 8 ou 9
+        digito += 3
+    if movimento == "C" and digito > 3: # não entra se digito for 1, 2 ou 3
+        digito -= 3
+    if movimento == "D" and digito % 3 != 0: # não entra se digito for 7, 8 ou 9
+        digito += 1
+    if movimento == "E" and digito % 3 != 1: # não entra se digito for 7, 8 ou 9
+        digito -= 1
+    return digito
 
 
-def obter_digito(movimentos, posicao_inicial):
-    """Ponto 2.2.2"""
-    pass
+def obter_digito(movimentos, digito):
+    """
+    obter digito: (cad. carateres, inteiro) -> inteiro
+
+    Ponto 2.2.2
+    """
+    for movimento in movimentos:
+        digito = obter_posicao(movimento, digito)
+    return digito
+
+def valida_obter_pin(sequencias):
+    if not (isinstance(sequencias, tuple) and 4 <= len(sequencias) <= 10):
+        return False
+    else:
+        for sequencia in sequencias:
+            for letra in sequencia:
+                if letra not in ("B", "C", "E", "D"):
+                    return False
+    return True
 
 
 def obter_pin(sequencias):
     """
+    obter pin: tuplo -> tuplo
+
     TEM DE RECEBER UM TUPLO E DEVOLVER OUTRO
 
     Verificar a validade:
@@ -109,7 +138,15 @@ def obter_pin(sequencias):
 
     Ponto 2.2.3
     """
-    pass
+    if not valida_obter_pin(sequencias):
+        raise ValueError ("obter pin: argumento invalido")
+
+    pin = ()
+    for sequencia in sequencias:
+        pin += (obter_digito(sequencia, 5),)
+    return pin
+
+
 
 
 # 3 - VERIFICAÇÃO DE DADOS
@@ -201,17 +238,17 @@ doc = 'BuAaXOoxiIKoOkggyrFfhHXxR duJjUTtaCcmMtaAGga eEMmtxXOjUuJQqQHhqoada JlLjb
 
 #-----2-----#
 
-#print(obter_posicao('C', 5))
+# print(obter_posicao('C', 5))
 # 2
 
-#print(obter_digito('CEE', 5))
+# print(obter_digito('CEE', 5))
 # 1
 
 #print(obter_pin(()))
 # obter_pin: argumento invalido
 
 t = ('CEE', 'DDBBB', 'ECDBE', 'CCCCB')
-#print(obter_pin(t))
+print(obter_pin(t))
 # (1, 9, 8, 5)
 
 
