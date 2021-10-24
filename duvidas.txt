@@ -1,6 +1,11 @@
+Quando diz "diferentes de si próprio" (antes do 1.2) também está a contar com maiúsculas?
+
+Não sei se tenho as assinaturas como deve de ser
+
+------------//-------------
+Respondido dia 21 de Outubro
+
 1.2.3 só recebe letras?
 ver comentários e tal
 
 var = len(x)
-
-Para cima: respondido dia 21

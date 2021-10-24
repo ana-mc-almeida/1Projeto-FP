@@ -1,3 +1,8 @@
+FAZER ANTES DE ENTREGAR:
+    Remover public tests
+    Remover 'Ponto x.y.z'
+    Inserir comentários nas validações (assinatura, docstring, etc)
+
 Ver para correr a string da primeira de traz para a frente
 
-Comparar .index() com pesquisa binária 
+Comparar .index() com pesquisa binária
