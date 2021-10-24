@@ -169,7 +169,6 @@ def eh_cifra(cifra):
             return False
     return True
 
-
 def eh_checksum(checksum):
     '''
     eh_checksum: cad. carateres -> booleano
@@ -208,11 +207,33 @@ def eh_entrada(entrada):
         return True
     return False
 
+def contar_letras(texto):
+    '''
+    contar_letras: cad. carateres -> dicionario
+    '''
+    letra_contagem = {}
+    for letra in texto:
+        if letra not in letra_contagem.keys():
+            if 97 <= ord(letra) <= 122:
+                letra_contagem[letra] = texto.count(letra)
+    # print(dic)
+    # print(sorted(dic, key=dic.get, reverse=True))
+    return letra_contagem
 
 def validar_cifra(cifra, checksum):
-    """Ponto 3.2.2"""
-    pass
+    """
+    validar cifra: (cad. carateres, cad. carateres) -> booleano
 
+    Ponto 3.2.2
+    """
+    cifra = sorted(cifra)       # ordenar os chars da cifra para ficarem por ordem alfabética no dicionario
+    contagem_letras = contar_letras(cifra)
+    letras_ordenadas = sorted(contagem_letras, key=contagem_letras.get, reverse=True) #lista com as letras da cifra ordenadas por ordem decrescente do numero de vezes que aparecem
+
+    for i in range(1, len(checksum)-1):
+        if letras_ordenadas[i-1] != checksum[i]:
+            return False
+    return True
 
 def filtrar_bdb(entradas):
     """Ponto 3.2.3"""
@@ -318,10 +339,10 @@ def public_tests():
     # print(eh_entrada(('a-b-c-d-e-f-g-h', '[xxxxx]', (950, 300))))
     # True
 
-    #print(validar_cifra('a-b-c-d-e-f-g-h', '[xxxxx]'))
+    # print(validar_cifra('a-b-c-d-e-f-g-h', '[xxxxx]'))
     # False
 
-    #print(validar_cifra('a-b-c-d-e-f-g-h', '[abcde]'))
+    # print(validar_cifra('a-b-c-d-e-f-g-h', '[abcde]'))
     # True
 
     #print(filtrar_bdb([]))
