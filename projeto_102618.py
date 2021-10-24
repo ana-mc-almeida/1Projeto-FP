@@ -52,7 +52,6 @@ def validar_corrigir_doc(texto):
             return False
     return True
 
-
 def corrigir_doc(texto):
     """
     corrigir doc: cad. carateres -> cad. carateres
@@ -207,6 +206,7 @@ def eh_entrada(entrada):
         return True
     return False
 
+
 def contar_letras(texto):
     '''
     contar_letras: cad. carateres -> dicionario
@@ -235,9 +235,20 @@ def validar_cifra(cifra, checksum):
             return False
     return True
 
+
 def filtrar_bdb(entradas):
     """Ponto 3.2.3"""
-    pass
+    cifra_nao_corresponde = []
+    if type(entradas) != list or len(entradas) < 1:
+        raise ValueError ("filtrar bdb: argumento invalido")
+    for entrada in entradas:
+        if eh_entrada(entrada):
+            if not validar_cifra(entrada[0], entrada[1]):
+                cifra_nao_corresponde.append(entrada)
+        else:
+            raise ValueError ("filtrar bdb: argumento invalido")
+    return cifra_nao_corresponde
+
 
 
 # 4 - DESENCRIPTAÇÃO DE DADOS
@@ -246,17 +257,42 @@ Exemplo: q = 133; (133+325)/122 = 3.5... quase 4; 4 + 1 = 5; e é a 5ª letra do
 """
 
 
-def obter_num_seguranca(tuplo):
+def obter_num_seguranca(nums):
     """
-    Mudar nome da variavel
+    obter num seguranca: tuplo -> inteiro
+    
     Ponto 4.2.2
     """
-    pass
+    comprimento = len(nums)
+    for i in range(comprimento-1):
+        for j in range(i+1, comprimento):
+            diferenca = abs(nums[i]-nums[j])
+            if (i == 0 and j == 1) or diferenca < num_seguranca: # (i == 0 and j == 1) faz com que a primeira diferença seja automaticamente o numero de seguranca, para começar
+                num_seguranca = diferenca    
+    return num_seguranca
 
 
 def decifrar_texto(cifra, numSeguranca):
-    """Ponto 4.2.3"""
-    pass
+    """
+    decifrar texto: (cad. carateres, inteiro) -> cad. carateres
+    
+    Ponto 4.2.3
+    """
+    texto_decifrado = ""
+    numSeguranca = numSeguranca % 26 # para só percorrer o alfabeto uma vez 
+    for i in range(len(cifra)):
+        if cifra[i] == "-":
+            texto_decifrado += " "
+        else:
+            nova_letra = ord(cifra[i]) + numSeguranca
+            if i % 2 == 0:
+                nova_letra += 1
+            else: 
+                nova_letra -= 1
+            if nova_letra > 122:
+                nova_letra -= 26    # voltar ao inicio do alfabeto
+            texto_decifrado += chr(nova_letra)
+    return texto_decifrado
 
 
 def decifrar_bdb(entradas):
@@ -264,7 +300,15 @@ def decifrar_bdb(entradas):
     ValueError ("decifrar bdb: argumento invalido")
     Ponto 4.2.4
     """
-    pass
+    entradas_decifradas = []
+    if type(entradas) != list or len(entradas) < 1:
+        raise ValueError ("decifrar bdb: argumento invalido")
+    for entrada in entradas:
+        if eh_entrada(entrada):
+            entradas_decifradas.append(decifrar_texto(entrada[0], obter_num_seguranca(entrada[2])))
+        else:
+            raise ValueError ("decifrar bdb: argumento invalido")
+    return entradas_decifradas
 
 
 # 5 - DEPURACAO DE SENHAS
@@ -298,13 +342,13 @@ def public_tests():
     # print(corrigir_palavra('cCdatabasacCADde'))
     # database
 
-    #print(eh_anagrama('caso', 'SaCo'))
+    # print(eh_anagrama('caso', 'SaCo'))
     # True
 
-    #print(eh_anagrama('caso', 'casos'))
+    # print(eh_anagrama('caso', 'casos'))
     # False
 
-    #print(corrigir_doc('???'))
+    # print(corrigir_doc('???'))
     # corrigir_doc: argumento invalido
 
     doc = 'BuAaXOoxiIKoOkggyrFfhHXxR duJjUTtaCcmMtaAGga eEMmtxXOjUuJQqQHhqoada JlLjbaoOsuUeYy cChgGvValLCwMmWBbclLsNn LyYlMmwmMrRrongTtoOkyYcCK daRfFKkLlhHrtZKqQkkvVKza'
@@ -319,7 +363,7 @@ def public_tests():
     # print(obter_digito('CEE', 5))
     # 1
 
-    #print(obter_pin(()))
+    # print(obter_pin(()))
     # obter_pin: argumento invalido
 
     t = ('CEE', 'DDBBB', 'ECDBE', 'CCCCB')
@@ -345,11 +389,11 @@ def public_tests():
     # print(validar_cifra('a-b-c-d-e-f-g-h', '[abcde]'))
     # True
 
-    #print(filtrar_bdb([]))
+    # print(filtrar_bdb([]))
     # filtrar_bdb: argumento invalido
 
     bdb = [('aaaaa-bbb-zx-yz-xy', '[abxyz]', (950, 300)), ('a-b-c-d-e-f-g-h', '[abcde]', (124, 325, 7)), ('entrada-muito-errada', '[abcde]', (50, 404))]
-    #print(filtrar_bdb(bdb))
+    # print(filtrar_bdb(bdb))
     # [('entrada-muito-errada', '[abcde]', (50, 404))]
 
 
@@ -359,19 +403,19 @@ def public_tests():
     # print(eh_entrada(('qgfo-qutdo-s-egoes-wzegsnfmjqz', '[abcde]', (2223,424,1316,99))))
     # True
 
-    #print(obter_num_seguranca((2223,424,1316,99)))
+    # print(obter_num_seguranca((2223,424,1316,99)))
     # 325
 
 
-    #print(decifrar_texto('qgfo-qutdo-s-egoes-wzegsnfmjqz', 325))
+    # print(decifrar_texto('qgfo-qutdo-s-egoes-wzegsnfmjqz', 325))
     # esta cifra e quase inquebravel
 
 
-    #print(decifrar_bdb([('nothing')]))
+    # print(decifrar_bdb([('nothing')]))
     # decifrar_bdb: argumento invalido
 
     bdb = [('qgfo-qutdo-s-egoes-wzegsnfmjqz', '[abcde]', (2223,424,1316,99)), ('lctlgukvzwy-ji-xxwmzgugkgw', '[abxyz]', (2388, 367, 5999)), ('nyccjoj-vfrex-ncalml', '[xxxxx]', (50, 404))]
-    #print(decifrar_bdb(bdb))
+    print(decifrar_bdb(bdb))
     # ['esta cifra e quase inquebravel', 'fundamentos da programacao', 'entrada muito errada']
 
     #----5----
