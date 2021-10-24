@@ -1,8 +1,21 @@
 FAZER ANTES DE ENTREGAR:
     Remover public tests
     Remover 'Ponto x.y.z'
-    Inserir comentários nas validações (assinatura, docstring, etc)
+    Inserir comentários nas validações (assinatura, docstring, etc):
+        valida_obter_pin
+
+
+---------------------//--------------------------
 
 Ver para correr a string da primeira de traz para a frente
 
 Comparar .index() com pesquisa binária
+
+---------------------//--------------------------
+
+Em cada função devemos ter um comentário assim:
+'''
+assinatura (ou seja, <nome da funcao>: <tipo dos argumentos> -> <tipo do return>)
+
+O que retorna
+outras cenas

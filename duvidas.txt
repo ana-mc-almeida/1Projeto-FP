@@ -2,6 +2,10 @@ Quando diz "diferentes de si próprio" (antes do 1.2) também está a contar com
 
 Não sei se tenho as assinaturas como deve de ser
 
+no eh_entrada a cifra é só minusculas, certo?
+temos de verificar se uma cifra tem dois -- seguidos ou podemos ter uma palavra "vazia"?
+no eh_entrada temos de confirmar se a cifra e o checksum são str?
+
 ------------//-------------
 Respondido dia 21 de Outubro
 
