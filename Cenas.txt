@@ -3,6 +3,9 @@ FAZER ANTES DE ENTREGAR:
     Remover 'Ponto x.y.z'
     Inserir comentários nas validações (assinatura, docstring, etc):
         valida_obter_pin
+        melhor ver todos 1 a 1
+    Ver diferença entre type() e isistance(,)
+
 
 
 ---------------------//--------------------------

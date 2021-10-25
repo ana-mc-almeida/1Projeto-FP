@@ -313,15 +313,81 @@ def decifrar_bdb(entradas):
 
 # 5 - DEPURACAO DE SENHAS
 
+def valida_nome_ou_senha(utilizador, informacao):
+    informacao = utilizador.get(informacao)
+    if type(informacao) == str and len(informacao) > 0:
+        return True
+    return False
+
+
+def valida_valor(rule):
+    valor = rule.get("vals")
+    if type(valor) == tuple and len(valor) == 2:
+        return True
+    elif type(tuple[0]) == type(tuple[1]) == int and tuple[0] <= tuple[1]:
+        return True
+    return False
+
+def valida_char(rule):
+    char = rule.get("char")
+    if type(char) == str and len(char) == 1 and 96 < ord(char) < 122:
+        return True
+    return False
+
+def valida_regra_individual(utilizador):
+    rule = utilizador.get("rule")
+    if type(rule) == dict and valida_valor(rule) and valida_char(rule):
+        return True
+    return False
 
 def eh_utilizador(utilizador):
-    """Ponto 5.2.1"""
-    pass
+    """
+    eh utilizador: universal -> booleano
+
+    Ponto 5.2.1
+    """
+    if type(utilizador) is dict and valida_nome_ou_senha(utilizador, "name") and valida_nome_ou_senha(utilizador, "pass") and valida_regra_individual(utilizador):
+        return True
+    return False
 
 
-def eh_senha_valida(senha, regra):
-    """Ponto 5.2.2"""
-    pass
+def valida_regras_gerais(senha):
+    count_vogais = seguidas = 0
+    comprimento = len(senha)
+    for i in range(comprimento):
+        if senha[i] in ('a', 'e', 'i', 'o', 'u'):
+            count_vogais += 1
+        if i !=comprimento-1 and senha[i] == senha[i+1]:
+            seguidas = 1
+
+    if count_vogais >= 3 and seguidas:
+        return True
+    return False
+
+def valida_regras_individuais(senha, regra):
+    valor = regra.get("vals")
+    min = valor[0]
+    max = valor[1]
+    char = regra.get("char")
+    count = 0
+
+    for letra in senha:
+        if letra == char:
+            count += 1
+
+    if min <= count <= max:
+        return True
+    return False
+
+def eh_senha_valida(senha, regra_individual):
+    """
+    eh senha valida: (cad. carateres, dicionario) -> booleano
+
+    Ponto 5.2.2
+    """
+    if valida_regras_individuais(senha, regra_individual) and valida_regras_gerais(senha):
+        return True
+    return False
 
 
 def filtrar_senhas(entradas):
@@ -329,7 +395,17 @@ def filtrar_senhas(entradas):
     ValueError ("filtrar senhas: argumento invalido")
     Ponto 5.2.3
     """
-    pass
+    senhas_erradas = []
+    if type(entradas) != list or len(entradas) < 1:
+        raise ValueError ("filtrar senhas: argumento invalido")
+    for entrada in entradas:
+        if eh_utilizador(entrada):
+            if not eh_senha_valida(entrada["pass"], entrada["rule"]):
+                senhas_erradas.append(entrada["name"])
+        else:
+            raise ValueError ("filtrar senhas: argumento invalido")
+    return sorted(senhas_erradas)
+
 
 
 # PUBLIC TESTS
@@ -415,31 +491,35 @@ def public_tests():
     # decifrar_bdb: argumento invalido
 
     bdb = [('qgfo-qutdo-s-egoes-wzegsnfmjqz', '[abcde]', (2223,424,1316,99)), ('lctlgukvzwy-ji-xxwmzgugkgw', '[abxyz]', (2388, 367, 5999)), ('nyccjoj-vfrex-ncalml', '[xxxxx]', (50, 404))]
-    print(decifrar_bdb(bdb))
+    # print(decifrar_bdb(bdb))
     # ['esta cifra e quase inquebravel', 'fundamentos da programacao', 'entrada muito errada']
 
     #----5----
 
-    #print(eh_utilizador({'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': (1, 3), 'char': 'a'}}))
+    # print(eh_utilizador({'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': (1, 3), 'char': 'a'}}))
     # True
 
-    #print(eh_utilizador({'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': 1, 'char': 'a'}}))
+    # print(eh_utilizador({'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': 1, 'char': 'a'}}))
     # False
 
 
-    #print(eh_senha_valida('aabcde', {'vals': (1, 3), 'char': 'a'}))
+    # print(eh_senha_valida('aabcde', {'vals': (1, 3), 'char': 'a'}))
     # True
 
-    #print(eh_senha_valida('cdefgh', {'vals': (1, 3), 'char': 'b'}))
+    # print(eh_senha_valida('cdefgh', {'vals': (1, 3), 'char': 'b'}))
     # False
 
 
-    #print(filtrar_senhas([]))
+    # print(filtrar_senhas([]))
     # filtrar_senhas: argumento invalido
 
-    bdb = [{'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': (1, 3), 'char': 'a'}}, {'name': 'jane.doe', 'pass': 'cdefgh', 'rule': {'vals': (1, 3), 'char': 'b'}}, {'name': 'jack.doe', 'pass': 'cccccc', 'rule': {'vals': (2, 9), 'char': 'c'}}]
-    #print(filtrar_senhas(bdb))
+    # bdb = [{'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': (1, 3), 'char': 'a'}}, {'name': 'jane.doe', 'pass': 'cdefgh', 'rule': {'vals': (1, 3), 'char': 'b'}}, {'name': 'jack.doe', 'pass': 'cccccc', 'rule': {'vals': (2, 9), 'char': 'c'}}]
+    # print(filtrar_senhas(bdb))
     # ['jack.doe', 'jane.doe']
+
+    
+    # bdb2 = [{'name': 'bbb', 'pass': 'aabcde', 'rule': {'vals': (1, 3), 'char': 'a'}}, {'name': 'gagagagahj', 'pass': 'cdefgh', 'rule': {'vals': (1, 3), 'char': 'b'}}, {'name': 'fafafaf', 'pass': 'cccccc', 'rule': {'vals': (2, 9), 'char': 'c'}}]
+    # print(filtrar_senhas(bdb2))
 
     return 0
 public_tests()

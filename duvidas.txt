@@ -6,6 +6,8 @@ no eh_entrada a cifra é só minusculas, certo?
 temos de verificar se uma cifra tem dois -- seguidos ou podemos ter uma palavra "vazia"?
 no eh_entrada temos de confirmar se a cifra e o checksum são str?
 
+nas minhas valida do ponto 5.2.1 ponho universal ou o tipo que é suposto ter?
+
 ------------//-------------
 Respondido dia 21 de Outubro
 
