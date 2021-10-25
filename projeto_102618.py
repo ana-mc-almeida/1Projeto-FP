@@ -6,15 +6,10 @@ https://web.fe.up.pt/~ee96100/projecto/Tabela%20ascii.htm
 
 def corrigir_palavra(palavra):
     """
-    corrigir palavra: cad. carateres -> cad. carateres
+    corrigir palavra: string -> string
 
-    Recebe uma palavra, potencialmente modificada por um surto de letras.
-    Devolve a string correspondente ah aplicação das reduções:
-        Remover o par minuscula/maiuscula da mesma letra se estas estiverem juntas
-        Não importa a ordem (minuscula/maiuscula ou maiuscula/minuscula)
-
-
-    Ponto 1.2.1
+    Retorna uma string correspondente à aplicação de reduções na palavra inicial.
+    Sempre que existirem duas letras iguais seguidas (uma minúscula e outra maiúscula), a palavra irá sofrer uma redução, pois estas letras serão removidas.
     """
     i = 0
     while i < len(palavra)-1:  # como vai comparar o indíce i com o índice i+1, o i não chega ao último índice da palavra OU quando só há uma letra nunca vai ser certo
@@ -30,47 +25,41 @@ def corrigir_palavra(palavra):
 
 def eh_anagrama(palavra, anagrama):
     """
-    eh anagrama: (cad. carateres, cad. carateres) -> booleano
+    eh anagrama: (string, string) -> bool
 
-    Recebe duas palavras e retorna True or False dependendo se sao anagramas
-    É considerado anagrama: as palavras sao constituidas pelas mesmas letras, ignorando diferenças
-    entre maiusculas e minusculas e a ordem entre carateres.
-
-    Ponto 1.2.2
+    Retorna True or False, dependendo se os argumentos dados são anagramas ou não.
+    São consideradas anagramas duas palavras constituídas pelas mesmas letras, ignorando diferenças entre maiúsculas e minúsculas e a ordem entre carateres.
     """
-    if palavra == anagrama:
-        return False
     return sorted(palavra.upper()) == sorted(anagrama.upper())
 
 
 def validar_corrigir_doc(texto):
-    for i in range(len(texto)):
+    '''
+    validar_corrigir_doc: string -> bool
+
+    Retorna True ou False caso o argumento seja válido ou não.
+    Para isso, o texto deve estar formado por uma ou mais palavras em que as palavras apenas podem estar separadas por um único espaço e tem de ser apenas por, pelo menos, uma letra.
+    '''
+    comprimento = len(texto)
+    for i in range(comprimento):
         char_atual = texto[i]
+        if comprimento < 1 or (comprimento == 1 and not (65 <= ord(char_atual) <= 90 or 97 <= ord(char_atual) <= 122)):
+            return False
         if char_atual == " " == texto[i+1]: #validar se há dois espaços seguidos
             return False
         elif not (65 <= ord(char_atual) <= 90 or 97 <= ord(char_atual) <= 122 or char_atual == " "): #validar se apenas existem letras e espaços no texto
             return False
     return True
 
+
 def corrigir_doc(texto):
     """
-    corrigir doc: cad. carateres -> cad. carateres
+    corrigir doc: string -> string
 
-
-    Recebe o texto com os erros
-        Corrige as palavras
-        Vê se sao anagramas e soh deixa a primeira ocorrencia de cada
-        Verifica se o argumento é valido
-            As palavras só podem estar separadas por 1 espaço
-            Tem 1 ou mais palavras
-            Cada palavra eh formada por pelo menos uma letra
-            Cada palavra soh tem letras
-            Se nao for, gera um ValueError ("corrigir doc: argumento invalido")
-
-    Ponto 1.2.3
+    Retorna o texto recebido sem erros, isto é, as palavras são corrigidas e os anagramas retirados, ficando apenas a sua primeira ocorrência.
     """
     if not validar_corrigir_doc(texto):
-        raise ValueError ("corrigir doc: argumento invalido")
+        raise ValueError ("corrigir_doc: argumento invalido")
 
     texto_filtrado = ""
     for palavra in texto.split(" "):
@@ -80,7 +69,7 @@ def corrigir_doc(texto):
     while i < len(texto_filtrado.split(" ")):
         palavras = texto_filtrado.split(" ")
         for j in range(i+1, len(palavras)):
-            if eh_anagrama(palavras[i], palavras[j]):
+            if eh_anagrama(palavras[i], palavras[j]) and palavras[i] != palavras [j]:
                 texto_filtrado = texto_filtrado.replace(palavras[j] + " ", "")
         i += 1
 
@@ -92,9 +81,10 @@ def corrigir_doc(texto):
 
 def obter_posicao(movimento, digito):
     """
-    obter posicao: (cad. carateres, inteiro) -> inteiro
+    obter posicao: (string, inteiro) -> inteiro
 
-    Ponto 2.2.1"""
+    Retorna o dígito correspondente à nova posição, após o movimento recebido.
+    """
     if movimento == "B" and digito < 7: # não entra se digito for 7, 8 ou 9
         digito += 3
     if movimento == "C" and digito > 3: # não entra se digito for 1, 2 ou 3
@@ -108,9 +98,9 @@ def obter_posicao(movimento, digito):
 
 def obter_digito(movimentos, digito):
     """
-    obter digito: (cad. carateres, inteiro) -> inteiro
+    obter digito: (string, inteiro) -> inteiro
 
-    Ponto 2.2.2
+    Retorna o dígito a marcar após finalizar todos os movimentos recebidos.
     """
     for movimento in movimentos:
         digito = obter_posicao(movimento, digito)
@@ -131,21 +121,16 @@ def obter_pin(sequencias):
     """
     obter pin: tuplo -> tuplo
 
-    TEM DE RECEBER UM TUPLO E DEVOLVER OUTRO
-
-    Verificar a validade:
-        o tuplo tem de ter entre 4 a 10 "sequencias"
-        cada sequencia tem de ter um ou mais carateres `C', `B', `E' ou `D')
-        Se nao, gera ValueError ("obter pin: argumento invalido")
-
-    Ponto 2.2.3
+    Retorna os dígitos que constituem o PIN codificado de acordo com movimentos recebidos.
     """
     if not valida_obter_pin(sequencias):
-        raise ValueError ("obter pin: argumento invalido")
+        raise ValueError ("obter_pin: argumento invalido")
 
     pin = ()
+    digito = 5
     for sequencia in sequencias:
-        pin += (obter_digito(sequencia, 5),)
+        digito = obter_digito(sequencia, digito)
+        pin += (digito,)
     return pin
 
 
@@ -155,10 +140,10 @@ def obter_pin(sequencias):
 
 def eh_cifra(cifra):
     '''
-    eh_cifra: cad. carateres -> booleano
+    eh_cifra: string -> booleano
 
     Retorna True caso o argumento recebido seja uma cifra.
-    Uma cadeira de caracteres eh uma cifra se contiver uma ou mais palavras (só letras minusculas), separadas por traços
+    Uma cadeira de caracteres é uma cifra se contiver uma ou mais palavras (só letras minúsculas), separadas por traços.
     '''
     comprimento = len(cifra)
     if type(cifra) != str or comprimento < 1:  
@@ -170,10 +155,10 @@ def eh_cifra(cifra):
 
 def eh_checksum(checksum):
     '''
-    eh_checksum: cad. carateres -> booleano
+    eh_checksum: string -> booleano
 
     Retorna True caso o argumento contenha uma sequência de controlo.
-    Uma sequencia de controlo é composta por letras minusculas entre parentesis retos
+    Uma sequência de controlo é composta por letras minúsculas entre parêntesis retos.
     '''
     comprimento = len(checksum)
     if type(checksum) != str or comprimento != 7 or checksum[0]!="[" or checksum[6]!="]":
@@ -188,7 +173,7 @@ def eh_seq_seguranca(seq_seguranca):
     eh_checksum: tuplo -> booleano
 
     Retorna True caso o argumento contenha uma sequência de seguranca.
-    Uma sequencia de seguranca eh um tuplo com dois ou mais numeros inteiros positivos
+    Uma sequência de segurança é um tuplo com dois ou mais númeors inteiros positivos.
     '''
     if type(seq_seguranca) != tuple or len(seq_seguranca) < 2:
         return False
@@ -200,7 +185,8 @@ def eh_seq_seguranca(seq_seguranca):
 def eh_entrada(entrada):
     """
     eh entrada: universal -> booleano
-    Ponto 3.2.1 e 3.2.1
+
+    Retorna True caso o argumento seja uma entrada da BDB, isto é, se é um tuplo que contém uma cifra, uma sequência de controlo e uma sequência de segurança.
     """
     if type(entrada) == tuple and eh_cifra(entrada[0]) and eh_checksum(entrada[1]) and eh_seq_seguranca(entrada[2]):
         return True
@@ -209,24 +195,25 @@ def eh_entrada(entrada):
 
 def contar_letras(texto):
     '''
-    contar_letras: cad. carateres -> dicionario
+    contar_letras: string -> dict
+
+    Retorna um dicionário em que cada chave corresponde a uma letra e o seu valor corresponde ao número de vezes que essa letra se encontra no argumento recebido.
     '''
     letra_contagem = {}
     for letra in texto:
         if letra not in letra_contagem.keys():
             if 97 <= ord(letra) <= 122:
                 letra_contagem[letra] = texto.count(letra)
-    # print(dic)
-    # print(sorted(dic, key=dic.get, reverse=True))
     return letra_contagem
 
 def validar_cifra(cifra, checksum):
     """
-    validar cifra: (cad. carateres, cad. carateres) -> booleano
+    validar cifra: (string, string) -> booleano
 
-    Ponto 3.2.2
+    Retorna True caso a sequência de controlo seja coerente com a cifra.
+    Para isso a sequência de controlo tem de ser formada pelas cinco letras mais comuns na cifra, por ordem inversa de ocorrências, com empates decididos por ordem alfabética.
     """
-    cifra = sorted(cifra)       # ordenar os chars da cifra para ficarem por ordem alfabética no dicionario
+    cifra = sorted(cifra)       # ordenar os chars da cifra para ficarem por ordem alfabética em letras_ordenadas
     contagem_letras = contar_letras(cifra)
     letras_ordenadas = sorted(contagem_letras, key=contagem_letras.get, reverse=True) #lista com as letras da cifra ordenadas por ordem decrescente do numero de vezes que aparecem
 
@@ -237,31 +224,31 @@ def validar_cifra(cifra, checksum):
 
 
 def filtrar_bdb(entradas):
-    """Ponto 3.2.3"""
+    """
+    filtrar_bdb: lista -> lista
+
+    Retorna uma lista com as entradas em o checksum não seja coerente com a cifra correspondente.
+    """
     cifra_nao_corresponde = []
     if type(entradas) != list or len(entradas) < 1:
-        raise ValueError ("filtrar bdb: argumento invalido")
+        raise ValueError ("filtrar_bdb: argumento invalido")
     for entrada in entradas:
         if eh_entrada(entrada):
             if not validar_cifra(entrada[0], entrada[1]):
                 cifra_nao_corresponde.append(entrada)
         else:
-            raise ValueError ("filtrar bdb: argumento invalido")
+            raise ValueError ("filtrar_bdb: argumento invalido")
     return cifra_nao_corresponde
 
 
 
 # 4 - DESENCRIPTAÇÃO DE DADOS
-"""
-Exemplo: q = 133; (133+325)/122 = 3.5... quase 4; 4 + 1 = 5; e é a 5ª letra do abcedário
-"""
-
 
 def obter_num_seguranca(nums):
     """
     obter num seguranca: tuplo -> inteiro
     
-    Ponto 4.2.2
+    Retorna a menor diferença positiva entre qualquer par dos números recebidos.
     """
     comprimento = len(nums)
     for i in range(comprimento-1):
@@ -274,9 +261,9 @@ def obter_num_seguranca(nums):
 
 def decifrar_texto(cifra, numSeguranca):
     """
-    decifrar texto: (cad. carateres, inteiro) -> cad. carateres
+    decifrar texto: (string, inteiro) -> string
     
-    Ponto 4.2.3
+    Retorna o texto decifrado conforme a cifra e o número de segurança.
     """
     texto_decifrado = ""
     numSeguranca = numSeguranca % 26 # para só percorrer o alfabeto uma vez 
@@ -297,23 +284,29 @@ def decifrar_texto(cifra, numSeguranca):
 
 def decifrar_bdb(entradas):
     """
-    ValueError ("decifrar bdb: argumento invalido")
-    Ponto 4.2.4
+    decifrar_bdb: lista -> lista
+
+    Retorna uma lista com o texto das entradas recebidas, já decifradas.
     """
     entradas_decifradas = []
     if type(entradas) != list or len(entradas) < 1:
-        raise ValueError ("decifrar bdb: argumento invalido")
+        raise ValueError ("decifrar_bdb: argumento invalido")
     for entrada in entradas:
         if eh_entrada(entrada):
             entradas_decifradas.append(decifrar_texto(entrada[0], obter_num_seguranca(entrada[2])))
         else:
-            raise ValueError ("decifrar bdb: argumento invalido")
+            raise ValueError ("decifrar_bdb: argumento invalido")
     return entradas_decifradas
 
 
 # 5 - DEPURACAO DE SENHAS
 
 def valida_nome_ou_senha(utilizador, informacao):
+    '''
+    valida_nome_ou_senha: (dict, string) -> bool
+
+    Retorna True caso a informação desejada cumpra aos requesitos (ter tamanho mínimo 1 e podem conter qualquer caráter).
+    '''
     informacao = utilizador.get(informacao)
     if type(informacao) == str and len(informacao) > 0:
         return True
@@ -321,6 +314,11 @@ def valida_nome_ou_senha(utilizador, informacao):
 
 
 def valida_valor(rule):
+    '''
+    valida_valor: dict -> bool
+
+    Retorna True caso o valor 'vals' da regra indivual seja um tuplo de dois inteiros positivos em que o primeiro tem de ser menor que o segundo.
+    '''
     valor = rule.get("vals")
     if type(valor) == tuple and len(valor) == 2:
         return True
@@ -329,12 +327,22 @@ def valida_valor(rule):
     return False
 
 def valida_char(rule):
+    '''
+    valida_char: dict -> bool
+
+    Retorna True caso o valor 'char' da regra indivual corresponda a uma letra minúscula.
+    '''
     char = rule.get("char")
     if type(char) == str and len(char) == 1 and 96 < ord(char) < 122:
         return True
     return False
 
 def valida_regra_individual(utilizador):
+    '''
+    valida_regra_individual: dict -> bool
+
+    Retorna True caso a regra individual seja válida.
+    '''
     rule = utilizador.get("rule")
     if type(rule) == dict and valida_valor(rule) and valida_char(rule):
         return True
@@ -344,7 +352,7 @@ def eh_utilizador(utilizador):
     """
     eh utilizador: universal -> booleano
 
-    Ponto 5.2.1
+    Retorna True caso o argumento recebido contenha a informação de utilizador relevante da BDB, isto é, nome, senha e regra individual.
     """
     if type(utilizador) is dict and valida_nome_ou_senha(utilizador, "name") and valida_nome_ou_senha(utilizador, "pass") and valida_regra_individual(utilizador):
         return True
@@ -352,6 +360,13 @@ def eh_utilizador(utilizador):
 
 
 def valida_regras_gerais(senha):
+    '''
+    valida_regras_gerais: string -> bool
+
+    Retorna True caso o argumento recebido corresponda regras gerais, sendo estas:
+    - Conter pelo menos 3 vogais minúsculas;
+    - Conter pelo menos 1 caracter que apareça duas vezes consecutivas
+    '''
     count_vogais = seguidas = 0
     comprimento = len(senha)
     for i in range(comprimento):
@@ -365,6 +380,11 @@ def valida_regras_gerais(senha):
     return False
 
 def valida_regras_individuais(senha, regra):
+    '''
+    valida_regras_individuais: (string, dict) -> bool
+
+    Retorna True caso a senha corresponda às regras individuais.
+    '''
     valor = regra.get("vals")
     min = valor[0]
     max = valor[1]
@@ -381,9 +401,9 @@ def valida_regras_individuais(senha, regra):
 
 def eh_senha_valida(senha, regra_individual):
     """
-    eh senha valida: (cad. carateres, dicionario) -> booleano
+    eh senha valida: (string, dicionario) -> booleano
 
-    Ponto 5.2.2
+    Retorna True se a senha cumpre tanto as regras gerais como as individuais.
     """
     if valida_regras_individuais(senha, regra_individual) and valida_regras_gerais(senha):
         return True
@@ -392,18 +412,19 @@ def eh_senha_valida(senha, regra_individual):
 
 def filtrar_senhas(entradas):
     """
-    ValueError ("filtrar senhas: argumento invalido")
-    Ponto 5.2.3
+    filtrar senhas: lista -> lista
+
+    Retorna, ordenado alfabeticamente, os nomes dos utilizadores com senhas erradas.
     """
     senhas_erradas = []
     if type(entradas) != list or len(entradas) < 1:
-        raise ValueError ("filtrar senhas: argumento invalido")
+        raise ValueError ("filtrar_senhas: argumento invalido")
     for entrada in entradas:
         if eh_utilizador(entrada):
             if not eh_senha_valida(entrada["pass"], entrada["rule"]):
                 senhas_erradas.append(entrada["name"])
         else:
-            raise ValueError ("filtrar senhas: argumento invalido")
+            raise ValueError ("filtrar_senhas: argumento invalido")
     return sorted(senhas_erradas)
 
 

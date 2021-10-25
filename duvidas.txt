@@ -8,6 +8,8 @@ no eh_entrada temos de confirmar se a cifra e o checksum são str?
 
 nas minhas valida do ponto 5.2.1 ponho universal ou o tipo que é suposto ter?
 
+eh_entrada recebe universal ou tuplo?
+
 ------------//-------------
 Respondido dia 21 de Outubro
 
