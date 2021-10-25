@@ -1,8 +1,10 @@
 '''
-https://web.fe.up.pt/~ee96100/projecto/Tabela%20ascii.htm
-'''
-# 1 - CORREÇÃO DA DOCUMENTAÇÃO
+Fundamentos da Programação - 1º Projeto
 
+Ana Margarida Cardoso Almeida
+ist1102618
+ana.margarida.almeida@tecnico.ulisboa.pt
+'''
 
 def corrigir_palavra(palavra):
     """
@@ -15,7 +17,6 @@ def corrigir_palavra(palavra):
     while i < len(palavra)-1:  # como vai comparar o indíce i com o índice i+1, o i não chega ao último índice da palavra OU quando só há uma letra nunca vai ser certo
         if (ord(palavra[i]) == ord(palavra[i+1])+ 32) or (ord(palavra[i]) == ord(palavra[i+1]) - 32):  # comparar as letras, usando a tabela ascii
             palavra = palavra[0: i] + palavra[i + 2 : len(palavra)]
-            #print(palavra)
             if i != 0:
                 i-=1
         else:
@@ -51,7 +52,6 @@ def validar_corrigir_doc(texto):
             return False
     return True
 
-
 def corrigir_doc(texto):
     """
     corrigir doc: string -> string
@@ -75,8 +75,6 @@ def corrigir_doc(texto):
 
     return texto_filtrado
 
-
-# 2 - DESCOBERTA DO PIN
 
 
 def obter_posicao(movimento, digito):
@@ -106,6 +104,7 @@ def obter_digito(movimentos, digito):
         digito = obter_posicao(movimento, digito)
     return digito
 
+
 def valida_obter_pin(sequencias):
     if not (isinstance(sequencias, tuple) and 4 <= len(sequencias) <= 10):
         return False
@@ -115,7 +114,6 @@ def valida_obter_pin(sequencias):
                 if letra not in ("B", "C", "E", "D"):
                     return False
     return True
-
 
 def obter_pin(sequencias):
     """
@@ -134,9 +132,6 @@ def obter_pin(sequencias):
     return pin
 
 
-
-
-# 3 - VERIFICAÇÃO DE DADOS
 
 def eh_cifra(cifra):
     '''
@@ -242,8 +237,6 @@ def filtrar_bdb(entradas):
 
 
 
-# 4 - DESENCRIPTAÇÃO DE DADOS
-
 def obter_num_seguranca(nums):
     """
     obter num seguranca: tuplo -> inteiro
@@ -299,7 +292,6 @@ def decifrar_bdb(entradas):
     return entradas_decifradas
 
 
-# 5 - DEPURACAO DE SENHAS
 
 def valida_nome_ou_senha(utilizador, informacao):
     '''
@@ -311,7 +303,6 @@ def valida_nome_ou_senha(utilizador, informacao):
     if type(informacao) == str and len(informacao) > 0:
         return True
     return False
-
 
 def valida_valor(rule):
     '''
@@ -426,121 +417,3 @@ def filtrar_senhas(entradas):
         else:
             raise ValueError ("filtrar_senhas: argumento invalido")
     return sorted(senhas_erradas)
-
-
-
-# PUBLIC TESTS
-
-def public_tests():
-
-    # print(corrigir_palavra('abBAx'))
-    # x
-
-    # print(corrigir_palavra('cCdatabasacCADde'))
-    # database
-
-    # print(eh_anagrama('caso', 'SaCo'))
-    # True
-
-    # print(eh_anagrama('caso', 'casos'))
-    # False
-
-    # print(corrigir_doc('???'))
-    # corrigir_doc: argumento invalido
-
-    doc = 'BuAaXOoxiIKoOkggyrFfhHXxR duJjUTtaCcmMtaAGga eEMmtxXOjUuJQqQHhqoada JlLjbaoOsuUeYy cChgGvValLCwMmWBbclLsNn LyYlMmwmMrRrongTtoOkyYcCK daRfFKkLlhHrtZKqQkkvVKza'
-    # print(corrigir_doc(doc))
-    # Buggy data base has wrong data
-
-    #-----2-----#
-
-    # print(obter_posicao('C', 5))
-    # 2
-
-    # print(obter_digito('CEE', 5))
-    # 1
-
-    # print(obter_pin(()))
-    # obter_pin: argumento invalido
-
-    t = ('CEE', 'DDBBB', 'ECDBE', 'CCCCB')
-    # print(obter_pin(t))
-    # (1, 9, 8, 5)
-
-
-
-    #-----3-----#
-
-    # print(eh_entrada(('a-b-c-d-e-f-g-h', '[abcd]', (950, 300))))
-    # False
-
-    # print(eh_entrada(('a-b-c-d-e-f-g-h-2', '[abcde]', (950, 300))))
-    # False
-
-    # print(eh_entrada(('a-b-c-d-e-f-g-h', '[xxxxx]', (950, 300))))
-    # True
-
-    # print(validar_cifra('a-b-c-d-e-f-g-h', '[xxxxx]'))
-    # False
-
-    # print(validar_cifra('a-b-c-d-e-f-g-h', '[abcde]'))
-    # True
-
-    # print(filtrar_bdb([]))
-    # filtrar_bdb: argumento invalido
-
-    bdb = [('aaaaa-bbb-zx-yz-xy', '[abxyz]', (950, 300)), ('a-b-c-d-e-f-g-h', '[abcde]', (124, 325, 7)), ('entrada-muito-errada', '[abcde]', (50, 404))]
-    # print(filtrar_bdb(bdb))
-    # [('entrada-muito-errada', '[abcde]', (50, 404))]
-
-
-    #-----4-----
-
-
-    # print(eh_entrada(('qgfo-qutdo-s-egoes-wzegsnfmjqz', '[abcde]', (2223,424,1316,99))))
-    # True
-
-    # print(obter_num_seguranca((2223,424,1316,99)))
-    # 325
-
-
-    # print(decifrar_texto('qgfo-qutdo-s-egoes-wzegsnfmjqz', 325))
-    # esta cifra e quase inquebravel
-
-
-    # print(decifrar_bdb([('nothing')]))
-    # decifrar_bdb: argumento invalido
-
-    bdb = [('qgfo-qutdo-s-egoes-wzegsnfmjqz', '[abcde]', (2223,424,1316,99)), ('lctlgukvzwy-ji-xxwmzgugkgw', '[abxyz]', (2388, 367, 5999)), ('nyccjoj-vfrex-ncalml', '[xxxxx]', (50, 404))]
-    # print(decifrar_bdb(bdb))
-    # ['esta cifra e quase inquebravel', 'fundamentos da programacao', 'entrada muito errada']
-
-    #----5----
-
-    # print(eh_utilizador({'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': (1, 3), 'char': 'a'}}))
-    # True
-
-    # print(eh_utilizador({'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': 1, 'char': 'a'}}))
-    # False
-
-
-    # print(eh_senha_valida('aabcde', {'vals': (1, 3), 'char': 'a'}))
-    # True
-
-    # print(eh_senha_valida('cdefgh', {'vals': (1, 3), 'char': 'b'}))
-    # False
-
-
-    # print(filtrar_senhas([]))
-    # filtrar_senhas: argumento invalido
-
-    # bdb = [{'name': 'john.doe', 'pass': 'aabcde', 'rule': {'vals': (1, 3), 'char': 'a'}}, {'name': 'jane.doe', 'pass': 'cdefgh', 'rule': {'vals': (1, 3), 'char': 'b'}}, {'name': 'jack.doe', 'pass': 'cccccc', 'rule': {'vals': (2, 9), 'char': 'c'}}]
-    # print(filtrar_senhas(bdb))
-    # ['jack.doe', 'jane.doe']
-
-    
-    # bdb2 = [{'name': 'bbb', 'pass': 'aabcde', 'rule': {'vals': (1, 3), 'char': 'a'}}, {'name': 'gagagagahj', 'pass': 'cdefgh', 'rule': {'vals': (1, 3), 'char': 'b'}}, {'name': 'fafafaf', 'pass': 'cccccc', 'rule': {'vals': (2, 9), 'char': 'c'}}]
-    # print(filtrar_senhas(bdb2))
-
-    return 0
-public_tests()
