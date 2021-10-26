@@ -1,3 +1,15 @@
+Submeti 25/10 às 23horas. Erros:
+    eh_utilizador - 114 - 115 - 116 - 109 - 
+    filtrar_bdb - 92
+    eh_entrada - 77 - 73 - 72
+    obter_pin - 65
+    corrigir_doc - 48 - 47 - 46 - 45 - 44 - 43 - 42 - 39 - 38 - 37 
+    eh_utilizador - 24 
+    corrigir_doc - 6
+    
+
+------------------//--------------------
+
 FAZER ANTES DE ENTREGAR:
     Remover public tests
     Remover 'Ponto x.y.z'
