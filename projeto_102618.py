@@ -61,9 +61,11 @@ def corrigir_doc(texto):
     if not validar_corrigir_doc(texto):
         raise ValueError ("corrigir_doc: argumento invalido")
 
-    texto_filtrado = ""
-    for palavra in texto.split(" "):
-        texto_filtrado += corrigir_palavra(palavra) + " "
+
+    palavras = texto.split(" ")
+    texto_filtrado = corrigir_palavra(palavras[0])
+    for i in range(1, len(palavras)):
+        texto_filtrado += " " + corrigir_palavra(palavras[i])
 
     i = 0
     while i < len(texto_filtrado.split(" ")):
@@ -74,8 +76,7 @@ def corrigir_doc(texto):
         i += 1
 
     return texto_filtrado
-
-
+    
 
 def obter_posicao(movimento, digito):
     """
