@@ -145,10 +145,10 @@ def eh_cifra(cifra):
     Uma cadeira de caracteres é uma cifra se contiver uma ou mais palavras (só letras minúsculas), separadas por traços.
     '''
     comprimento = len(cifra)
-    if type(cifra) != str or comprimento < 1:  
+    if type(cifra) != str or comprimento < 1 or cifra[0] == "-" or cifra[comprimento-1] == "-":  
         return False
-    for i in range(comprimento):                                # verifica se o argumento apenas palavras constituidas
-        if not 97 <= ord(cifra[i]) <= 122 and cifra[i] != "-":  # por letras minusculas, separedas por -
+    for i in range(comprimento-1):                                # verifica se o argumento apenas palavras não nulas constituidas
+        if not 97 <= ord(cifra[i]) <= 122 and cifra[i] != "-" or (cifra[i]==cifra[i+1]=="-"):    # por letras minusculas, separadas por -
             return False
     return True
 
@@ -190,7 +190,6 @@ def eh_entrada(entrada):
     if type(entrada) == tuple and eh_cifra(entrada[0]) and eh_checksum(entrada[1]) and eh_seq_seguranca(entrada[2]):
         return True
     return False
-
 
 def contar_letras(texto):
     '''
