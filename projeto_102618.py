@@ -74,18 +74,20 @@ def corrigir_doc(texto):
         palavras = texto_filtrado.split(" ")
         for j in range(i+1, len(palavras)):
             if eh_anagrama(palavras[i], palavras[j]) and palavras[i].upper() != palavras[j].upper():
-                texto_filtrado = texto_filtrado.replace(palavras[j], "")
+                texto_filtrado = texto_filtrado.replace(" " + palavras[j], "")
         i += 1
 
-    i = 0
-    while i < len(texto_filtrado) - 1 :
-        if texto_filtrado[i] == texto_filtrado[i+1] == " ":
-            texto_filtrado = texto_filtrado[:i] + texto_filtrado[i+2:]
-        else:
-            i += 1
+    # i = 0
+    # while i < len(texto_filtrado) - 1 :
+    #     if texto_filtrado[i] == texto_filtrado[i+1] == " ":
+    #         texto_filtrado = texto_filtrado[:i] + texto_filtrado[i+1:]
+    #     else:
+    #         i += 1
 
     return texto_filtrado
     
+# doc = 'BuAaXOoxiIKoOkggyrFfhHXxR duJjUTtaCcmMtaAGga eEMmtxXOjUuJQqQHhqoada JlLjbaoOsuUeYy cChgGvValLCwMmWBbclLsNn LyYlMmwmMrRrongTtoOkyYcCK daRfFKkLlhHrtZKqQkkvVKza'
+# print(corrigir_doc(doc).replace(" ", "!"))
 
 def obter_posicao(movimento, digito):
     """
@@ -204,7 +206,6 @@ def eh_entrada(entrada):
         return True
     return False
 
-print(eh_entrada(("A", "[aaaaa]", (1, 2))))
 
 def contar_letras(texto):
     '''
