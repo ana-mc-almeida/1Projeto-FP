@@ -4,11 +4,12 @@ Submeti 25/10 às 23horas. Erros:
     filtrar_bdb - 92                    RTE
     eh_entrada - 77 - 72                RTE
     eh_entrada - 73
-    obter_pin - 65
     corrigir_doc - 39 - 38 - 37         RTE
 
     corrigir_doc - 6 - 48 - 47 - 46 - 45 - 43 - 42 - 44 
+    obter_pin - 65
 
+    ------------
     corrigir_doc RTE
     filtrar_bdb RTE
     eh_utilizador resposta errada

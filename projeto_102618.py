@@ -111,10 +111,14 @@ def valida_obter_pin(sequencias):
         return False
     else:
         for sequencia in sequencias:
+            if not sequencia:
+                return False
             for letra in sequencia:
                 if letra not in ("B", "C", "E", "D"):
                     return False
     return True
+
+
 
 def obter_pin(sequencias):
     """
@@ -131,7 +135,6 @@ def obter_pin(sequencias):
         digito = obter_digito(sequencia, digito)
         pin += (digito,)
     return pin
-
 
 
 def eh_cifra(cifra):
