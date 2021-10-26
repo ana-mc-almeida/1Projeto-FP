@@ -41,6 +41,8 @@ def validar_corrigir_doc(texto):
     Retorna True ou False caso o argumento seja válido ou não.
     Para isso, o texto deve estar formado por uma ou mais palavras em que as palavras apenas podem estar separadas por um único espaço e tem de ser apenas por, pelo menos, uma letra.
     '''
+    if type(texto) != str or not texto: # validar se o texto é uma string não nula
+        return False
     comprimento = len(texto)
     for i in range(comprimento):
         char_atual = texto[i]
@@ -72,8 +74,15 @@ def corrigir_doc(texto):
         palavras = texto_filtrado.split(" ")
         for j in range(i+1, len(palavras)):
             if eh_anagrama(palavras[i], palavras[j]) and palavras[i].upper() != palavras[j].upper():
-                texto_filtrado = texto_filtrado.replace(palavras[j] + " ", "")
+                texto_filtrado = texto_filtrado.replace(palavras[j], "")
         i += 1
+
+    i = 0
+    while i < len(texto_filtrado) - 1 :
+        if texto_filtrado[i] == texto_filtrado[i+1] == " ":
+            texto_filtrado = texto_filtrado[:i] + texto_filtrado[i+2:]
+        else:
+            i += 1
 
     return texto_filtrado
     
