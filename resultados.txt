@@ -1,0 +1,110 @@
+....F.............F...EF.FF................F..........................................FFF...............E.................
+======================================================================
+ERROR: test_corrigir_doc_5 (__main__.TestDocumentacao1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Ana Almeida\Downloads\ProjTester\proj_tester.py", line 95, in test_corrigir_doc_5
+    target.corrigir_doc(1)
+  File "<string>", line 61, in corrigir_doc
+  File "<string>", line 44, in validar_corrigir_doc
+TypeError: object of type 'int' has no len()
+
+======================================================================
+ERROR: test_filtrar_bdb_3 (__main__.TestVerificacaoDados3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Ana Almeida\Downloads\ProjTester\proj_tester.py", line 354, in test_filtrar_bdb_3
+    target.filtrar_bdb([("aaaaa-bbb-zx-yz-xy", "[abxyz]")])
+  File "<string>", line 232, in filtrar_bdb
+  File "<string>", line 187, in eh_entrada
+IndexError: tuple index out of range
+
+======================================================================
+FAIL: test_eh_utilizador_3 (__main__.TestDepuracao5)
+Exemplo enunciado {'name':'bruce','surname':'wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Ana Almeida\Downloads\ProjTester\proj_tester.py", line 465, in test_eh_utilizador_3
+    self.assertFalse(
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_corrigir_doc_10 (__main__.TestDocumentacao1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Ana Almeida\Downloads\ProjTester\proj_tester.py", line 118, in test_corrigir_doc_10
+    self.assertEqual(
+AssertionError: 'Era la suma souvenir del la inmaculada briosa y marioneta danesa de' != 'Era la suma souvenir del la inmaculada briosa y marioneta danesa de adanes'
+- Era la suma souvenir del la inmaculada briosa y marioneta danesa de
++ Era la suma souvenir del la inmaculada briosa y marioneta danesa de adanes
+?                                                                    +++++++
+
+
+======================================================================
+FAIL: test_corrigir_doc_6 (__main__.TestDocumentacao1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Ana Almeida\Downloads\ProjTester\proj_tester.py", line 100, in test_corrigir_doc_6
+    target.corrigir_doc("")
+AssertionError: ValueError not raised : ValueError not raised
+
+======================================================================
+FAIL: test_corrigir_doc_8 (__main__.TestDocumentacao1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Ana Almeida\Downloads\ProjTester\proj_tester.py", line 110, in test_corrigir_doc_8
+    self.assertEqual("Programacao Programacao", target.corrigir_doc(doc))
+AssertionError: 'Programacao Programacao' != 'Programacao Programacao porgramacao'
+- Programacao Programacao
++ Programacao Programacao porgramacao
+?                        ++++++++++++
+
+
+======================================================================
+FAIL: test_corrigir_doc_9 (__main__.TestDocumentacao1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Ana Almeida\Downloads\ProjTester\proj_tester.py", line 114, in test_corrigir_doc_9
+    self.assertEqual("Programacao com objetos e", target.corrigir_doc(doc))
+AssertionError: 'Programacao com objetos e' != 'Programacao com objetos e bojetos'
+- Programacao com objetos e
++ Programacao com objetos e bojetos
+?                          ++++++++
+
+
+======================================================================
+FAIL: test_obter_pin_5 (__main__.TestPIN2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Ana Almeida\Downloads\ProjTester\proj_tester.py", line 261, in test_obter_pin_5
+    target.obter_pin(("", "E", "C", "D"))
+AssertionError: ValueError not raised : ValueError not raised
+
+======================================================================
+FAIL: test_eh_entrada_14 (__main__.TestVerificacaoDados3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Ana Almeida\Downloads\ProjTester\proj_tester.py", line 310, in test_eh_entrada_14
+    self.assertFalse(target.eh_entrada(("aa-", "[aaaaa]", (1, 2))))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_eh_entrada_15 (__main__.TestVerificacaoDados3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Ana Almeida\Downloads\ProjTester\proj_tester.py", line 313, in test_eh_entrada_15
+    self.assertFalse(target.eh_entrada(("-aa", "[aaaaa]", (1, 2))))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_eh_entrada_16 (__main__.TestVerificacaoDados3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Ana Almeida\Downloads\ProjTester\proj_tester.py", line 316, in test_eh_entrada_16
+    self.assertFalse(target.eh_entrada(("a--a", "[aaaaa]", (1, 2))))
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 122 tests in 0.013s
+
+FAILED (failures=9, errors=2)
