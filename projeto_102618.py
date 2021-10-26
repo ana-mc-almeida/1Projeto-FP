@@ -196,7 +196,7 @@ def eh_entrada(entrada):
 
     Retorna True caso o argumento seja uma entrada da BDB, isto é, se é um tuplo que contém uma cifra, uma sequência de controlo e uma sequência de segurança.
     """
-    if type(entrada) == tuple and eh_cifra(entrada[0]) and eh_checksum(entrada[1]) and eh_seq_seguranca(entrada[2]):
+    if type(entrada) == tuple and len(entrada) == 3 and eh_cifra(entrada[0]) and eh_checksum(entrada[1]) and eh_seq_seguranca(entrada[2]):
         return True
     return False
 
