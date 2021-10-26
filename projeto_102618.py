@@ -156,10 +156,14 @@ def eh_cifra(cifra):
     comprimento = len(cifra)
     if type(cifra) != str or comprimento < 1 or cifra[0] == "-" or cifra[comprimento-1] == "-":  
         return False
-    for i in range(comprimento-1):                                # verifica se o argumento apenas palavras não nulas constituidas
-        if not 97 <= ord(cifra[i]) <= 122 and cifra[i] != "-" or (cifra[i]==cifra[i+1]=="-"):    # por letras minusculas, separadas por -
+    for i in range(comprimento):                                # verifica se o argumento apenas palavras não nulas constituidas
+        if not 97 <= ord(cifra[i]) <= 122 and cifra[i] != "-":  # por letras minusculas, separadas por -
+            return False
+        if i != 0 and cifra[i]==cifra[i-1]=="-":
             return False
     return True
+
+
 
 def eh_checksum(checksum):
     '''
@@ -199,6 +203,8 @@ def eh_entrada(entrada):
     if type(entrada) == tuple and len(entrada) == 3 and eh_cifra(entrada[0]) and eh_checksum(entrada[1]) and eh_seq_seguranca(entrada[2]):
         return True
     return False
+
+print(eh_entrada(("A", "[aaaaa]", (1, 2))))
 
 def contar_letras(texto):
     '''
@@ -347,7 +353,7 @@ def valida_regra_individual(utilizador):
     Retorna True caso a regra individual seja válida.
     '''
     rule = utilizador.get("rule")
-    if type(rule) == dict and valida_valor(rule) and valida_char(rule):
+    if isinstance(rule, dict) and valida_valor(rule) and valida_char(rule):
         return True
     return False
 
@@ -357,7 +363,7 @@ def eh_utilizador(utilizador):
 
     Retorna True caso o argumento recebido contenha a informação de utilizador relevante da BDB, isto é, nome, senha e regra individual.
     """
-    if type(utilizador) is dict and valida_nome_ou_senha(utilizador, "name") and valida_nome_ou_senha(utilizador, "pass") and valida_regra_individual(utilizador):
+    if isinstance(utilizador, dict) and len(utilizador) == 3 and valida_nome_ou_senha(utilizador, "name") and valida_nome_ou_senha(utilizador, "pass") and valida_regra_individual(utilizador):
         return True
     return False
 
