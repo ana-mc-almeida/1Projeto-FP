@@ -3,9 +3,10 @@ Submeti 25/10 às 23horas. Erros:
     filtrar_bdb - 92
     eh_entrada - 77 - 73 - 72
     obter_pin - 65
-    corrigir_doc - 48 - 47 - 46 - 45 - 44 - 43 - 42 - 39 - 38 - 37 
+    corrigir_doc - 39 - 38 - 37 
     eh_utilizador - 24 
-    corrigir_doc - 6
+
+    corrigir_doc - 6 - 48 - 47 - 46 - 45 - 43 - 42 - 44 
     
 
 ------------------//--------------------

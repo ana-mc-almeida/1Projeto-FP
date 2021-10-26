@@ -71,7 +71,7 @@ def corrigir_doc(texto):
     while i < len(texto_filtrado.split(" ")):
         palavras = texto_filtrado.split(" ")
         for j in range(i+1, len(palavras)):
-            if eh_anagrama(palavras[i], palavras[j]) and palavras[i] != palavras [j]:
+            if eh_anagrama(palavras[i], palavras[j]) and palavras[i].upper() != palavras[j].upper():
                 texto_filtrado = texto_filtrado.replace(palavras[j] + " ", "")
         i += 1
 
