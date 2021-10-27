@@ -348,8 +348,9 @@ def valida_regra_individual(utilizador):
     Retorna True caso a regra individual seja válida.
     '''
     rule = utilizador.get("rule")
-    if isinstance(rule, dict) and valida_valor(rule) and valida_char(rule):
-        return True
+    if isinstance(rule, dict):
+        if len(rule) == 0 or (valida_valor(rule) and valida_char(rule)):
+            return True
     return False
 
 def eh_utilizador(utilizador):
@@ -362,6 +363,7 @@ def eh_utilizador(utilizador):
         return True
     return False
 
+# print(eh_utilizador({'name': 'john.doe', 'pass': 'aabcde', "rule":{}}))
 
 def valida_regras_gerais(senha):
     '''
