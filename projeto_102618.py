@@ -326,7 +326,7 @@ def valida_valor(rule):
     valor = rule.get("vals")
     if type(valor) != tuple or len(valor) != 2:
         return False
-    elif type(valor[0]) == type(valor[1]) == int and valor[0] <= valor[1]:
+    elif type(valor[0]) == type(valor[1]) == int and valor[0] > 0 and valor[1] > 0 and valor[0] <= valor[1]:
         return True
     return False
 
