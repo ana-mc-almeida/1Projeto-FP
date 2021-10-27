@@ -77,17 +77,7 @@ def corrigir_doc(texto):
                 texto_filtrado = texto_filtrado.replace(" " + palavras[j], "")
         i += 1
 
-    # i = 0
-    # while i < len(texto_filtrado) - 1 :
-    #     if texto_filtrado[i] == texto_filtrado[i+1] == " ":
-    #         texto_filtrado = texto_filtrado[:i] + texto_filtrado[i+1:]
-    #     else:
-    #         i += 1
-
     return texto_filtrado
-    
-# doc = 'BuAaXOoxiIKoOkggyrFfhHXxR duJjUTtaCcmMtaAGga eEMmtxXOjUuJQqQHhqoada JlLjbaoOsuUeYy cChgGvValLCwMmWBbclLsNn LyYlMmwmMrRrongTtoOkyYcCK daRfFKkLlhHrtZKqQkkvVKza'
-# print(corrigir_doc(doc).replace(" ", "!"))
 
 def obter_posicao(movimento, digito):
     """
@@ -155,8 +145,10 @@ def eh_cifra(cifra):
     Retorna True caso o argumento recebido seja uma cifra.
     Uma cadeira de caracteres é uma cifra se contiver uma ou mais palavras (só letras minúsculas), separadas por traços.
     '''
+    if type(cifra) != str:
+        return False
     comprimento = len(cifra)
-    if type(cifra) != str or comprimento < 1 or cifra[0] == "-" or cifra[comprimento-1] == "-":  
+    if comprimento < 1 or cifra[0] == "-" or cifra[comprimento-1] == "-":  
         return False
     for i in range(comprimento):                                # verifica se o argumento apenas palavras não nulas constituidas
         if not 97 <= ord(cifra[i]) <= 122 and cifra[i] != "-":  # por letras minusculas, separadas por -
@@ -174,8 +166,10 @@ def eh_checksum(checksum):
     Retorna True caso o argumento contenha uma sequência de controlo.
     Uma sequência de controlo é composta por letras minúsculas entre parêntesis retos.
     '''
+    if type(checksum) != str:
+        return False
     comprimento = len(checksum)
-    if type(checksum) != str or comprimento != 7 or checksum[0]!="[" or checksum[6]!="]":
+    if comprimento != 7 or checksum[0]!="[" or checksum[6]!="]":
         return False
     for i in range(1, comprimento-1):
         if not 97 <= ord(checksum[i]) <= 122:
@@ -330,9 +324,9 @@ def valida_valor(rule):
     Retorna True caso o valor 'vals' da regra indivual seja um tuplo de dois inteiros positivos em que o primeiro tem de ser menor que o segundo.
     '''
     valor = rule.get("vals")
-    if type(valor) == tuple and len(valor) == 2:
-        return True
-    elif type(tuple[0]) == type(tuple[1]) == int and tuple[0] <= tuple[1]:
+    if type(valor) != tuple or len(valor) != 2:
+        return False
+    elif type(valor[0]) == type(valor[1]) == int and valor[0] <= valor[1]:
         return True
     return False
 
@@ -343,7 +337,7 @@ def valida_char(rule):
     Retorna True caso o valor 'char' da regra indivual corresponda a uma letra minúscula.
     '''
     char = rule.get("char")
-    if type(char) == str and len(char) == 1 and 96 < ord(char) < 122:
+    if type(char) == str and len(char) == 1 and 96 < ord(char) < 123:
         return True
     return False
 

@@ -1,3 +1,10 @@
+Submeti 26/10. Erros:
+    eh_utilizador - 115 - 116 - Wrong Answer
+    eh_utilizador - 24 - 114 - Runtime Error
+    eh_entrada - 77 - Runtime Error
+
+
+------------------//--------------------
 Submeti 25/10 às 23horas. Erros:
     eh_utilizador - 115 - 116 - 109 - 
     eh_utilizador - 24 - 114            RTE
