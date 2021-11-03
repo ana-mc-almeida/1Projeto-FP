@@ -1,3 +1,9 @@
+antes de voltar a submeter:
+    guardar sem formatter:
+    - sorted
+    - entradas_decifradas.append
+    
+-----//-----
 Submeti 26/10. Erros:
     eh_utilizador - 115 - 116 - Wrong Answer
     eh_utilizador - 24 - 114 - Runtime Error

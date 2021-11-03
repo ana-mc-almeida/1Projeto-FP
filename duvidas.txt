@@ -1,3 +1,8 @@
+funções auxiliares tem de ter assinatura e docstring?
+funções auxiliares dentro ou fora?
+
+-------------------//--------------
+
 Quando diz "diferentes de si próprio" (antes do 1.2) também está a contar com maiúsculas?
 
 Não sei se tenho as assinaturas como deve de ser
