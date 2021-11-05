@@ -2,6 +2,7 @@ antes de voltar a submeter:
     guardar sem formatter:
     - sorted
     - entradas_decifradas.append
+
     
 -----//-----
 Submeti 26/10. Erros:

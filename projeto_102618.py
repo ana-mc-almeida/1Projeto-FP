@@ -113,6 +113,13 @@ def obter_digito(movimentos, digito):
 
 
 def valida_obter_pin(sequencias):
+    '''
+
+    Retorna True caso o argumento seja válido ou não.
+    Um argumento é válido se:
+    - For um tuplo de entre 4 e 10 sequências de movimentos
+    - Cada movimento é uma string com 1 ou mais mais carateres 'C', 'B', 'E' ou 'D'
+    '''
     if not (isinstance(sequencias, tuple) and 4 <= len(sequencias) <= 10):
         return False
     else:
@@ -183,7 +190,7 @@ def eh_checksum(checksum):
 
 def eh_seq_seguranca(seq_seguranca):
     '''
-    eh_checksum: tuplo -> booleano
+    eh_seq_seguranca: tuplo -> booleano
 
     Retorna True caso o argumento contenha uma sequência de seguranca.
     Uma sequência de segurança é um tuplo com dois ou mais númeors inteiros positivos.
@@ -209,7 +216,7 @@ def eh_entrada(entrada):
 
 def contar_letras(texto):
     '''
-    contar_letras: cad. carateres -> dict
+    contar_letras: cad. carateres -> dicionário
 
     Retorna um dicionário em que cada chave corresponde a uma letra e o seu valor corresponde ao número de vezes que essa letra se encontra no argumento recebido.
     '''
@@ -261,7 +268,7 @@ def filtrar_bdb(entradas):
 
 def obter_num_seguranca(nums):
     """
-    obter num seguranca: tuplo -> inteiro
+    obter_num_seguranca: tuplo -> inteiro
 
     Retorna a menor diferença positiva entre qualquer par dos números recebidos.
     """
@@ -277,7 +284,7 @@ def obter_num_seguranca(nums):
 
 def decifrar_texto(cifra, numSeguranca):
     """
-    decifrar texto: cad. carateres x inteiro -> cad. carateres
+    decifrar_texto: cad. carateres x inteiro -> cad. carateres
 
     Retorna o texto decifrado conforme a cifra e o número de segurança.
     """
@@ -318,9 +325,11 @@ def decifrar_bdb(entradas):
 
 def valida_nome_ou_senha(utilizador, informacao):
     '''
-    valida_nome_ou_senha: (dict, cad. carateres) -> bool
+    valida_nome_ou_senha: dicionário x cad. carateres -> booleano
 
-    Retorna True caso a informação desejada cumpra aos requesitos (ter tamanho mínimo 1 e podem conter qualquer caráter).
+    Retorna True caso a informação desejada cumpra aos requesitos:
+    - Ter tamanho mínimo = 1
+    - Pode conter qualquer caráter
     '''
     informacao = utilizador.get(informacao)
     if type(informacao) == str and len(informacao) > 0:
@@ -330,7 +339,7 @@ def valida_nome_ou_senha(utilizador, informacao):
 
 def valida_valor(rule):
     '''
-    valida_valor: dict -> bool
+    valida_valor: dicionário -> booleano
 
     Retorna True caso o valor 'vals' da regra indivual seja um tuplo de dois inteiros positivos em que o primeiro tem de ser menor que o segundo.
     '''
@@ -344,7 +353,7 @@ def valida_valor(rule):
 
 def valida_char(rule):
     '''
-    valida_char: dict -> bool
+    valida_char: dicionário -> booleano
 
     Retorna True caso o valor 'char' da regra indivual corresponda a uma letra minúscula.
     '''
@@ -356,7 +365,7 @@ def valida_char(rule):
 
 def valida_regra_individual(utilizador):
     '''
-    valida_regra_individual: dict -> bool
+    valida_regra_individual: dicionário -> booleano
 
     Retorna True caso a regra individual seja válida.
     '''
@@ -379,7 +388,7 @@ def eh_utilizador(utilizador):
 
 def valida_regras_gerais(senha):
     '''
-    valida_regras_gerais: cad. carateres -> bool
+    valida_regras_gerais: cad. carateres -> booleano
 
     Retorna True caso o argumento recebido corresponda regras gerais, sendo estas:
     - Conter pelo menos 3 vogais minúsculas;
@@ -400,7 +409,7 @@ def valida_regras_gerais(senha):
 
 def valida_regras_individuais(senha, regra):
     '''
-    valida_regras_individuais: cad. carateres x dict -> bool
+    valida_regras_individuais: cad. carateres x dicionário -> booleano
 
     Retorna True caso a senha corresponda às regras individuais.
     '''
